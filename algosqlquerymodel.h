@@ -1,12 +1,16 @@
-#ifndef ALGOSQLQUERYMODE_H
-#define ALGOSQLQUERYMODE_H
+#ifndef ALGOSQLQUERYMODEL_H
+#define ALGOSQLQUERYMODEL_H
 
-#include <QObject>
+#include <QSqlQueryModel>
 
-class AlgoSqlQueryMode : public QSqlQueryModel
+class AlgoSqlQueryModel : public QSqlQueryModel
 {
+    Q_OBJECT
 public:
-    AlgoSqlQueryMode();
+    AlgoSqlQueryModel(QObject* parent=0);
+    Q_INVOKABLE void setQuery(const QString &query,const QSqlDatabase &db=QSqlDatabase());
+    Q_INVOKABLE bool setHeaderData(int section,Qt::Orientation orientation,const QVariant &value,int role =Qt::EditRole);
+
 };
 
-#endif // ALGOSQLQUERYMODE_H
+#endif // ALGOSQLQUERYMODEL_H

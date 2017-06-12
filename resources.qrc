@@ -1,1 +1,43 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/">
+        <file>images/customer.png</file>
+        <file>images/face.png</file>
+        <file>images/knob.png</file>
+        <file>images/longhand.png</file>
+        <file>images/shorthand.png</file>
+        <file>images/thinhand.png</file>
+        <file>images/face1.png</file>
+        <file>images/new_customer.png</file>
+        <file>images/view_customer.png</file>
+        <file>images/save.png</file>
+        <file>images/insert.png</file>
+        <file>images/cancel.png</file>
+        <file>main_test.qml</file>
+        <file>images/arrow.png</file>
+        <file>images/arrow@2x.png</file>
+        <file>images/arrow@3x.png</file>
+        <file>images/arrow@4x.png</file>
+        <file>images/arrows.png</file>
+        <file>images/arrows@2x.png</file>
+        <file>images/arrows@3x.png</file>
+        <file>images/arrows@4x.png</file>
+        <file>images/back.png</file>
+        <file>images/back@2x.png</file>
+        <file>images/back@3x.png</file>
+        <file>images/back@4x.png</file>
+        <file>images/drawer.png</file>
+        <file>images/drawer@2x.png</file>
+        <file>images/drawer@3x.png</file>
+        <file>images/drawer@4x.png</file>
+        <file>images/menu.png</file>
+        <file>images/menu@2x.png</file>
+        <file>images/menu@3x.png</file>
+        <file>images/menu@4x.png</file>
+        <file>images/black-x-png-27.png</file>
+        <file>images/check.png</file>
+        <file>images/Trash.png</file>
+        <file>images/mail.png</file>
+        <file>images/phone.png</file>
+        <file>images/select_all.png</file>
+    </qresource>
+</RCC>

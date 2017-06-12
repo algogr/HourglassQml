@@ -1,6 +1,31 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>main_old.qml</file>
         <file>MainForm.ui.qml</file>
+        <file>ToolTipArea.qml</file>
+        <file>ToolTipTimer.qml</file>
+        <file>AlgoSingleListDelegate.qml</file>
+        <file>BarChart.qml</file>
+        <file>Data.qml</file>
+        <file>testdrag.qml</file>
+        <file>Clock.qml</file>
+        <file>main.qml</file>
+        <file>AlgoTableView.qml</file>
+        <file>testmain.qml</file>
+        <file>Graph.qml</file>
+        <file>TimeAudit.qml</file>
+        <file>Tables.qml</file>
+        <file>AppButtonGroup.qml</file>
+        <file>AlgoEntityDelegate.qml</file>
+        <file>AlgoEntityInsertDelegate.qml</file>
+        <file>NoteSheet.qml</file>
+        <file>CustomerNew.qml</file>
+        <file>Task.qml</file>
+        <file>AlgoCalendar.qml</file>
+        <file>Customer.qml</file>
+        <file>CustomerTable.qml</file>
+        <file>images/invoice.png</file>
+        <file>Invoicing.qml</file>
+        <file>CustomerGraph.qml</file>
     </qresource>
 </RCC>
