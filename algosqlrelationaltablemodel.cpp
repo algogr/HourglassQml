@@ -66,4 +66,21 @@ void AlgoSqlRelationalTableModel::setFilter(const QString &filter)
     QSqlRelationalTableModel::setFilter(filter);
 }
 
+QVariantMap AlgoSqlRelationalTableModel::get( int rowNumber ) const
+{
+    QVariantMap map;
+    QHash<int,QByteArray> roleName = roleNames();
+    foreach (int i, roleName.keys())
+    {
+        // For each attribute (role) get its value and insert it into the map
+        // where the map's key is the attributes string reference
+
+        // The data() method returns the value for the requested attribute
+        // where i is the attributes enum value.
+        // The index() method returns a QModelIndex which is a further
+        // abstraction layer (will talk about that in a later post)
+        map[roleName.value(i)] = data( index( rowNumber,0 ), i );
+    }
+    return map;
+}
 

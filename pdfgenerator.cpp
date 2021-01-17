@@ -11,10 +11,10 @@ void pdfGenerator::setText(const QString &text)
     textDoc.setHtml(text);
 
 }
-QString pdfGenerator::generatePDF()
+QString pdfGenerator::generatePDF(QString const &name)
 {
        QPrinter printer;
-       QString pdfPath="/home/jim/Downloads/tmp/jim999.pdf";
+       QString pdfPath="/home/jim/Downloads/tmp/"+name+".pdf";
        printer.setOutputFileName(pdfPath);
        printer.setOutputFormat(QPrinter::PdfFormat);
        textDoc.print(&printer);

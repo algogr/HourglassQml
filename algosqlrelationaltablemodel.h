@@ -18,6 +18,7 @@ public:
     QHash<int, QByteArray> roleNames() const {return roles; }
     Q_INVOKABLE void setSort(int column,Qt::SortOrder order);
     Q_INVOKABLE void setFilter(const QString& filter);
+    Q_INVOKABLE  QVariantMap get( int rowNumber ) const  ;
 
 private:
     QHash<int, QByteArray> roles;

@@ -218,7 +218,7 @@ Pane {
 
             Button{
                 id:btndel
-                visible: false
+                visible: falseTechDistrict.qml
 
                 //text: "Cancel"
                 Image {
@@ -227,7 +227,7 @@ Pane {
                 }
                 onReleased: {
                     md.visible=true
-                    //customerModel2.removeRow(0)
+                    //customerModel2.removeRTechDistrict.qmlow(0)
                     //customerModel2.setFilter("")
                     //customerModel2.select()
                     //stackView.pop()

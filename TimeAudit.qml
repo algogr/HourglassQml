@@ -96,7 +96,7 @@ Item {
                          cusemail=customerModel.data(indexmail)
                         var indexphone=customerModel.index(custname.currentIndex,5)
                         cusphone=customerModel.data(indexphone)
-                        console.log("lakaki"+cusid);
+
 
                         var taskcategoryindex=customerModel.index(custname.currentIndex,6)
 
@@ -104,7 +104,7 @@ Item {
                         var k=taskCategoriesModel.index(0,1)
                         var tcie=taskCategoriesModel.data(k);
                         taskCategoriesModel.setFilter("")
-
+                        place.checked=false
                         taskcatcombo.currentIndex=taskcatcombo.find(tcie)
                     }
                 }
@@ -131,7 +131,7 @@ Item {
 
                         onDoubleClicked:
 
-                         {
+                         {http://www.frontpages.gr/
                             if (custname.currentIndex==-1)
                                 return
 
@@ -158,7 +158,7 @@ Item {
                                 var b3="'<B>Έναρξη: "+starttime.getDate()+"-"+(starttime.getMonth()+1)+"-"+starttime.getFullYear()+" " +starttime.getHours()+":"+startminutes+"</B><br><br>"
                                 var b4="<B>Λήξη: "+endtime.getHours()+":"+endminutes+"</B><br><br>"
                                 var b5="<B>Διαρκεια: "+Math.round(((endtime-starttime % 86400000) % 3600000) / 60000)+"'</B><br><br>"
-                                var b6= place.checked=true?"<B>Οι εργασίες πραγματοποιήθηκαν στο χώρο σας</B><br><br>":"<B>Οι εργασίες πραγματοποιήθηκαν με απομακρυσμένη σύνδεση</B><br><br>"
+                                var b6= place.checked===true?"<B>Οι εργασίες πραγματοποιήθηκαν στο χώρο σας</B><br><br>":"<B>Οι εργασίες πραγματοποιήθηκαν με απομακρυσμένη σύνδεση</B><br><br>"
                                 taskEmail.setBody(b1+b2+b3+b4+b5+b6)
                                 taskEmail.send()
 

@@ -64,7 +64,7 @@ void Email::send()
 
 
     MimeMessage message;
-    qDebug()<<getFrom()<<getFromName()<<getTo()<<getToName()<<getTitle()<<getBody();
+    //qDebug()<<getFrom()<<getFromName()<<getTo()<<getToName()<<getTitle()<<getBody();
     message.setSender(new EmailAddress(getFrom(),getFromName()));
     message.addRecipient(new EmailAddress(getTo(),getToName()));
 

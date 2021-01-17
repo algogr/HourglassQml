@@ -16,6 +16,9 @@ Pane {
     property string pdfComment
     property bool selectallmode: false
     property bool clean : true
+    property variant changedtaskid:[]
+
+
 
         Column {
             id:c1
@@ -54,16 +57,20 @@ Pane {
                         onClicked: {
                             clean=false
                             var invoiceindex=taskModel2.index(index,8)
+                            var idindex=taskModel2.index(index,0)
+
+                            var d1=new Date(start_time)
+                            var d2=new Date(end_time)
+                            var diff=(d2-d1)/3600000
 
                             if (checked===true)
                             {
                                 console.log(start_time)
                                 taskModel2.setData(invoiceindex,1)
                                 taskModel2.submitAll()
+                                changedtaskid.push(taskModel2.data(idindex))
+                                console.log("changed"+changedtaskid)
 
-                                var d1=new Date(start_time)
-                                var d2=new Date(end_time)
-                                var diff=(d2-d1)/3600000
                                 if (taskcatid==1)
                                 {
                                     h1.text=(parseFloat(h1.text)+diff).toFixed(2)
@@ -206,16 +213,16 @@ Pane {
     var mn=extractfromdate(v,5)
 
     var v1= new Date(endtime)
-    var h1=extractfromdate(v,4)
-    var mn1=extractfromdate(v,5)
+    var h1=extractfromdate(v1,4)
+    var mn1=extractfromdate(v1,5)
 
-    diffg=parseFloat((v1-v)/3600000).toFixed(2)
+    diffg=(parseFloat((v1-v)/3600000).toFixed(2))*100
 
     datestart=d+"-"+m+"-"+y
     apo=h+":"+mn
     eos=h1+":"+mn1
-        pdfComment=taskModel2.data(commentindex)
-        taskid=taskModel2.data(idindex)
+    pdfComment=taskModel2.get(currentIndex)["comment"]
+    taskid=taskModel2.get(currentIndex)["id"]
 
 
 //}
@@ -364,11 +371,12 @@ onTextChanged: {
 TextField{
     id:toth
     text: "0"
+    color: "blue"
     enabled: false
-    width: implicitWidth/2
+    width: (implicitWidth/2)+25
     horizontalAlignment: Text.AlignRight
     font.bold: true
-    font.pixelSize: 25
+    font.pixelSize: 20
     onTextChanged: {
         if (isNaN(text))
             text="0"
@@ -377,11 +385,12 @@ TextField{
 TextField{
 id:totv
 text: "0"
-width: implicitWidth/2
+color: "blue"
+width: (implicitWidth/2)+25
 horizontalAlignment: Text.AlignRight
 enabled: false
 font.bold: true
-font.pixelSize: 25
+font.pixelSize: 20
 onTextChanged: {
     if (isNaN(text))
         text="0"
@@ -400,6 +409,7 @@ Button{
         }
 
         onReleased: {
+
             if(!clean)
             {
             var rowcount=fintradeModel.rowCount()
@@ -419,6 +429,7 @@ Button{
                 list.currentIndex=i
                 tasksTableModel2.setFilter("id="+list.taskid)
                 var fidindex=tasksTableModel2.index(0,10)
+                var invindex2=tasksTableModel2.index(0,8)
                 var invindex=taskModel2.index(i,8)
 
                 if (taskModel2.data(invindex)==1)
@@ -430,6 +441,7 @@ Button{
                 hourspdf=hourspdf+"<tr><th>"+datestart+"</th><th>"+apo+"</th><th>-</th><th>"+eos+"</th><th>"+diffg+"</th><th>"+pdfComment+"</th></tr>"
                 console.log("enabled:"+list.taskid)
                 tasksTableModel2.setData(fidindex,ftrid)
+                tasksTableModel2.setData(invindex2,1)
                 console.log("enabledftrid"+ftrid)
                 tasksTableModel2.submitAll()
                 //list.currentIndex=-1
@@ -446,14 +458,15 @@ Button{
             hourspdf=hourspdf+"</table>"
 
             pdfgen.setText(hourspdf)
-            var attachments=[pdfgen.generatePDF()]
+            var attachments=[pdfgen.generatePDF(custname)]
 
 
             taskEmail.setTo("rxa@algo.gr")
             taskEmail.setToName("Ρουλίτσα")
             taskEmail.setTitle("Invoice Details")
             taskEmail.setAttachments(attachments)
-            var b1="Πελάτης:"+custname+"<br><br>"
+            var b1="Πελάτης:"+custname+"<br><br>";
+
             var b2="<B>"+invcomment.text+"</B><br><br>"
             var b3="'<B>Ώρες: "+toth.text+"</B><br><br>"
             var b4="<B>Αξία: "+totv.text+"</B><br><br>"
@@ -461,8 +474,16 @@ Button{
             taskEmail.setBody(b1+b2+b3+b4)
             taskEmail.send()
 }
+            taskModel2.setFilter("")
+            tasksTableModel2.setFilter("")
+            taskModel.select()
+            fintradecusModel.select()
+            fintradeModel.select()
+            tasksTableModel.select()
+            clean=true
+            stackView.pop()
 
-            stackView.pop("")
+
 
 
 
@@ -498,6 +519,12 @@ Button{
         aw.isininvoice=false
 
     }
+        taskModel2.setFilter("")
+        tasksTableModel2.setFilter("")
+        taskModel.select()
+        fintradecusModel.select()
+        fintradeModel.select()
+        tasksTableModel.select()
         stackView.pop()
     }
 }
@@ -514,9 +541,20 @@ Button{
     onReleased: {
         var st
         if (selectallmode)
+        {
             st=0
+            clean=1
+
+        }
         else
+        {
             st=1
+            h1.text="0"
+            h2.text="0"
+            h3.text="0"
+            h4.text="0"
+            clean=0
+        }
 
 
         for (var i=0;i<list.count;++i)
@@ -524,6 +562,75 @@ Button{
            var invoiceindex=taskModel2.index(i,8)
            taskModel2.setData(invoiceindex,st)
            taskModel2.submitAll()
+           var starttimeindex =taskModel2.index(i,5)
+           var endtimeindex =taskModel2.index(i,6)
+           var catidindex =taskModel2.index(i,9)
+           var starttime =taskModel2.data(starttimeindex)
+           var endtime =taskModel2.data(endtimeindex)
+           var catid =taskModel2.data(catidindex)
+
+            var d1=new Date(starttime)
+            var d2=new Date(endtime)
+            var diff=(d2-d1)/3600000
+
+            if (st==1)
+            {
+
+
+
+
+                if (catid==1)
+                {
+                    h1.text=(parseFloat(h1.text)+diff).toFixed(2)
+                }
+                if (catid==2)
+                {
+                    h2.text=(parseFloat(h2.text)+diff).toFixed(2)
+                }
+                if (catid==3)
+                {
+                    h3.text=(parseFloat(h3.text)+diff).toFixed(2)
+                }
+                if (catid==4)
+                {
+                    h4.text=(parseFloat(h4.text)+diff).toFixed(2)
+                }
+            }
+
+            if (st==0)
+            {
+
+
+
+                if (catid==1)
+                {
+                    h1.text=(parseFloat(h1.text)-diff).toFixed(2)
+                }
+                if (catid==2)
+                {
+                    h2.text=(parseFloat(h2.text)-diff).toFixed(2)
+                }
+                if (catid==3)
+                {
+                    h3.text=(parseFloat(h3.text)-diff).toFixed(2)
+                }
+                if (catid==4)
+                {
+                    h4.text=(parseFloat(h4.text)-diff).toFixed(2)
+                }
+            }
+
+            if (st==0)
+            {
+                h1.text="0"
+                h2.text="0"
+                h3.text="0"
+                h4.text="0"
+            }
+
+            toth.text=(parseFloat(h1.text)+parseFloat(h2.text)+parseFloat(h3.text)+parseFloat(h4.text)).toFixed(2)
+            totv.text=(parseFloat(h1.text)*parseFloat(p1.text)+parseFloat(h2.text)*parseFloat(p2.text)+parseFloat(h3.text)*parseFloat(p3.text)+parseFloat(h4.text)*parseFloat(p4.text)).toFixed(2)
+
 
         }
 
@@ -579,6 +686,23 @@ TextField{
 
 
         }
+        Component.onDestruction: {
+            console.log("Destruction Beginning!")
+            console.log("ListCount:"+list.count)
 
+            if (!clean)
+            {
+            for (var i=0;i<changedtaskid.length;++i)
+            {
+               tasksTableModel2.setFilter("id="+changedtaskid[1])
+               var invoiceindex=tasksTableModel2.index(0,8)
+               tasksTableModel2.setData(invoiceindex,0)
+               tasksTableModel2.submitAll()
+
+            }
+            }
+
+
+        }
 
 }

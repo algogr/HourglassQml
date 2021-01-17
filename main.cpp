@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL");
-    db.setDatabaseName("hourglass_test");
+    db.setDatabaseName("hourglass");
     db.setHostName("localhost");
     db.setPort(3306);
     db.setUserName("root");
     db.setPassword("101264");
-    db.open();
+    qDebug()<<db.open();
 
 
     Email taskemail;
@@ -43,9 +43,6 @@ int main(int argc, char *argv[])
     cModel->generateRoleNames();
 
     cModel->setFilter("active=1");
-    qDebug()<<"Roles"<<cModel->roleNames();
-    qDebug()<<"Count"<<cModel->rowCount();
-
     cModel->select();
 
     AlgoSqlQueryModel* qModel=new AlgoSqlQueryModel();
@@ -119,8 +116,6 @@ int main(int argc, char *argv[])
 
     //qAssert(tModel->rowCount()!=0);
 
-    qDebug()<<"Roles"<<tModel->roleNames();
-    qDebug()<<"Count"<<tModel->rowCount();
     //tmodel->setR
     //tModel->qxFetchAll();
 
@@ -139,10 +134,12 @@ int main(int argc, char *argv[])
     vModel->select();
     vModel->setFilter("");
 
+
     AlgoSqlTableModel* fModel = new AlgoSqlTableModel(0,db);
     fModel->setTable("fintrade");
     fModel->select();
     fModel->generateRoleNames();
+
 
 
     AlgoSqlTableModel* vModel1 = new AlgoSqlTableModel(0,db);
@@ -164,13 +161,17 @@ int main(int argc, char *argv[])
 
 
 
+
     AlgoSqlTableModel* ttmodel=new AlgoSqlTableModel(0,db);
     ttmodel->setTable("tasks");
     ttmodel->select();
 
+
+
     AlgoSqlTableModel* ttmodel2=new AlgoSqlTableModel(0,db);
     ttmodel2->setTable("tasks");
     ttmodel2->select();
+
 
 
 
@@ -185,6 +186,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("taskCategoriesModel",tkModel);
     engine.rootContext()->setContextProperty("taskCategoriesModel1",tkModel1);
     engine.rootContext()->setContextProperty("viewModel",vModel);
+
+
     engine.rootContext()->setContextProperty("viewModel1",vModel1);
     engine.rootContext()->setContextProperty("fintradeModel",fModel);
     engine.rootContext()->setContextProperty("tiModel",tiModel);
@@ -195,7 +198,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("pdfgen",&pdf);
     engine.rootContext()->setContextProperty("querymodel",qModel);
 
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
 
     return app.exec();
 }
