@@ -64,5 +64,6 @@ HEADERS += \
 ##HEADERS += ./include/hourglass_precompiled_header.gen.h
 ##HEADERS += ./include/hourglass_export.gen.h
 
-DISTFILES +=
+DISTFILES += \
+    README.md
 
